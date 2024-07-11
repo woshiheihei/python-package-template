@@ -2,6 +2,7 @@
 SHELL := /usr/bin/env bash
 PYTHON := python
 PYTHONPATH := `pwd`
+VENV_PATH := venv
 
 #* Docker variables
 IMAGE := {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
@@ -10,7 +11,9 @@ VERSION := latest
 #* Poetry
 .PHONY: poetry-download
 poetry-download:
-	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | $(PYTHON) -
+		$(PYTHON) -m venv $(VENV_PATH)
+		$(VENV_PATH)/bin/pip install -U pip setuptools
+		$(VENV_PATH)/bin/pip install poetry
 
 .PHONY: poetry-remove
 poetry-remove:
